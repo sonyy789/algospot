@@ -5,7 +5,7 @@ using namespace std;
 double mem[1001][1001];
 double snail(int length, int day, double prob)
 {
-    if(length <= 0 | day >= length | prob < DIV ) return prob;
+    if(length <= 0 | day >= length  ) return prob;
     if(day == 0 | day*2 < length ) return 0;
     if(mem[length][day]) return mem[length][day]*prob;
     double result = 0;
@@ -20,12 +20,10 @@ int main()
     cin>>T;
     cout.setf(ios::fixed, ios_base::floatfield);
     cout.precision(10);
-    memset(&mem, 0, sizeof(mem));
+    memset(&mem, 0, sizeof(mem)); // if pair(day,length) - > always same value !! -> initialize by once
     while(T--)
     {
         cin>>n>>m;
         cout<<snail(n, m, (double)1)<<"\n";
     }
 }
-
-// 0.000000001 미만 return
