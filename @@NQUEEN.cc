@@ -1,5 +1,4 @@
 #include <iostream>
-#include <unistd.h>
 using namespace std;
 int mem[13][13] = {0};
 int zero_chk(int x, int y, int N)
@@ -11,20 +10,8 @@ int zero_chk(int x, int y, int N)
     while(y > 0) if(mem[--y][x] == 1) return 1; 
     return 0;
 }
-void print(int N)
-{
-    for(int i = 0; i < N; i++)
-    {
-        for(int j = 0; j < N; j++)
-        {
-            cout<<mem[i][j]<<" ";
-        }cout<<"\n";
-    }cout<<"\n";
-}
 int nqueen(int y, int N)
 {
-    //print(N);
-    ///sleep(2);
     if(y == N) return 1;
     int cnt  = 0;
     for(int i = 0; i < N; i++)
