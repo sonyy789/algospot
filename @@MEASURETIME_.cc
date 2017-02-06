@@ -1,44 +1,41 @@
-#include <cstdio>
-#define CITY 5000
+#include <iostream>
+#include <algorithm>
+#define ALPA 26
 using namespace std;
-int min(int a, int b)
-{
-    int tmp;
-    tmp = a < b ? a:b;
-    return tmp;
-}
+typedef struct NODE{
+    int count = 0;
+    string str;
+} node;
 int main()
 {
-    int N, K, T;
-    int L[CITY];
-    int M[CITY];
-    int G[CITY];
-    int temp  = 0;
-    scanf("%d", &T);
+    int T;
+    cin>>T;
     while(T--)
     {
-        scanf("%d%d", &N, &K);
-        for(int i = 0; i < N; i++)
+        string input;
+        cin>>input;
+        node *p = new node[ALPA];
+        for(int i = 0; i < input.size(); i+=2)
         {
-            scanf("%d%d%d", &L[i], &M[i], &G[i]);
+            p[input[i]-97].count++;
+            cout<<input[i]-97<<endl;  //test
         }
-        int high = 8030001;
-        int low = -1;
-        int mid = low + (high - low)/2;
-        while(high > low + 1)
+        for(int i = 0; i < input.size(); i+=2)
         {
-            mid = low + (high - low)/2;
-            int cnt = 0;
-            for(int i = 0; i < N; i++)
+            if(p[i].count > 1) sort(p[i].str.begin(), p[i].str.end());
+        }
+        
+        for(int i = 0; i < ALPA; i++)
+        {
+            if(p[i].count)
             {
-                if(mid < L[i]-M[i]) continue;
-                temp = (min(L[i],mid)-(L[i]-M[i]))/G[i] + 1;
-                if(temp > 0) cnt+=temp;
+                for(int j = 0; j < p[i].count; j++)
+                {
+                    cout<<(char)(i+97)<<p[i].str[j];
+                }
             }
-            if(cnt >= K) high = mid;
-            else low = mid;
-            
-        }
-        printf("%d\n", low + 1);
+        }cout<<endl;
+        input.clear();
+        delete[] p;
     }
 }
