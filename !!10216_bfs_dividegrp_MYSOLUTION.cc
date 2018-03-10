@@ -4,7 +4,12 @@
 #include <tuple>
 #include <vector>
 using namespace std;
-vector<tuple<int,int,int>> pos;
+typedef struct Point{
+	int y;
+	int x;
+	int r;
+} p;
+vector<p> pos;
 bool dist(int y, int x, int r, int idx){
 	double dist = sqrt(pow(x-get<1>(pos[idx]), 2)+pow(y-get<0>(pos[idx]), 2));
 	return dist<=(double)(r+get<2>(pos[idx]))?true:false;
@@ -14,7 +19,7 @@ int main(){
 	scanf("%d", &t);
 	while(t--){
 		scanf("%d", &n);
-		pos = vector<tuple<int,int,int>>(n);
+		pos = vector<p>(n);
 		for(int i = 0; i < n; i++){
 			scanf("%d%d%d",&x,&y,&r);
 			pos[i] = make_tuple(x,y,r);
