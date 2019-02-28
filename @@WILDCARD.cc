@@ -1,58 +1,39 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
+#include <vector>
+#include <cstring>
 using namespace std;
-bool wildcard(string a, string b)
-{
-    int idx = 0;
-    int size1 = a.size(), end = b.size();
-    for(int i = 0; i < size1; i++)
-    {
-        if(a[i] != b[idx])
-        {
-            if(a[i] == '*')
-            {
-                while(a[i+1] == '*') i++;
-                if( i == size1-1 ) return true; 
-                if(a[i+1] == '?')
-                {
-                    for(int j = idx; j < end; j++)
-                        if(wildcard(&a[i+1], &b[j])) return true;
-                    return false;
-                }
-                else
-                {
-                    for(int j = idx; j < end; j++)
-                            if(a[i+1] == b[j])
-                            if(wildcard(&a[i+1], &b[j])) return true;
-                    return false;
-                }
-            }
-            else if(a[i] == '?') { idx++; continue; }
-            else return false;
-        }
-        idx++;
+int t, n, len_a, len_b;
+string a, b;
+bool solve(int idx_a, int idx_b){
+    int i;
+    while(idx_a != len_a && idx_b != len_b){
+        if(a[idx_a] == '?'){
+        }else if(a[idx_a] =='*'){
+            while(a[idx_a+1] == '*') {idx_a++;}
+            if(idx_a == len_a-1) return true;
+            for(i = idx_b; i < len_b; i++)
+                if(solve(idx_a+1, i)) return true;
+            return false; 
+        }else if(a[idx_a] != b[idx_b]) return false;
+        idx_a++; idx_b++;
     }
-    if(a.size() != b.size()) return false;
-    return true;
+    while(a[idx_a] =='*') {idx_a++;}
+    return (idx_a == len_a && idx_b == len_b);
 }
-int main()
-{
-    int t, n;
-    string input, temp;
+int main(){
+    ios_base::sync_with_stdio(false);
     cin>>t;
-    while(t--)
-    {
-        cin>>input>>n;
-        vector<string> result;
-        for(int i = 0; i < n; i++)
-        {
-            cin>>temp;
-            if(wildcard(input, temp)) result.push_back(temp);
+    while(t--){
+        cin>>a>>n;
+        len_a = a.size();
+        vector<string> ans;
+        while(n--){
+            cin>>b;
+            len_b = b.size();
+            if(solve(0,0)) ans.push_back(b);
         }
-        sort(result.begin(), result.end());
-        for(string data : result)
-            cout<<data<<"\n";
-        result.clear();
+        sort(ans.begin(), ans.end());
+        for(string str:ans) cout<<str<<"\n";
     }
 }
