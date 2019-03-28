@@ -1,28 +1,21 @@
-#include <iostream>
-#include <vector>
+#include <cstdio>
 #include <algorithm>
 using namespace std;
-int main()
-{
-    int t, n;
-    cin>>t;
-    while(t--)
-    {
-        cin>>n;
-        vector<int> hot(n), eat(n);
-        vector<pair<int, int>> all;
-        int sum = 0, ans = 0, temp_sum;
-        for(int i = 0; i < n; i++) cin>>hot[i], sum += hot[i];
-        temp_sum = sum;
-        for(int i = 0; i < n; i++) cin>>eat[i];
-        for(int i = 0; i < n; i++) all.push_back(make_pair(eat[i], hot[i]));
-        sort(all.begin(), all.end());
-        for(int i = n-1; i >= 0; i--)
-        {
-            sum -= all[i].second;
-            int value = sum - all[i].first;
-            if(value < 0) ans = max(ans, abs(value));
+int c, n;
+pair<int, int> A[10001];
+int main(){
+    int i, j;
+    scanf("%d", &c);
+    while(c--){
+        scanf("%d", &n);
+        for(i = 1; i <= n; i++) scanf("%d", &A[i].second);
+        for(i = 1; i <= n; i++) scanf("%d", &A[i].first);
+        sort(A+1, A+1+n, greater<pair<int, int>>());
+        int ans = 0, sum = 0;
+        for(i = 1; i <= n; i++){
+            sum += A[i].second;
+            ans = max(ans, sum+A[i].first);
         }
-        cout<<temp_sum+ans<<"\n";
+        printf("%d\n", ans);
     }
 }
